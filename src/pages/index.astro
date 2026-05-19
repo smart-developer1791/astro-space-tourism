@@ -180,6 +180,15 @@ import { images } from '../data/images';
 		from { opacity: 0; transform: translateY(20px); }
 		to { opacity: 1; transform: translateY(0); }
 	}
+
+	/* 
+	 * Prevent FOUC (Flash of Unstyled Content).
+	 * These elements are initially hidden via CSS and will be 
+	 * smoothly revealed by GSAP in the script below.
+	 */
+	#hero-title-1, #hero-title-2, #hero-desc, #hero-cta {
+		opacity: 0;
+	}
 </style>
 
 <script>
