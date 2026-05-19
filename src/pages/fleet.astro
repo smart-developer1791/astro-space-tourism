@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { fleet } from '../data/fleet';
+import { Users } from '@lucide/astro';
+---
+
+<Layout title="Our Fleet | AstroNova" description="Explore the state-of-the-art spacecraft that will take you to the stars.">
+  <div class="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
+    <div class="mb-16 text-center max-w-3xl mx-auto">
+      <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">The AstroNova <span class="text-gradient">Fleet</span></h1>
+      <p class="text-xl text-gray-400">Engineering marvels designed for ultimate safety, speed, and uncompromising luxury.</p>
+    </div>
+
+    <!-- Bento Grid Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+      {fleet.map((craft, index) => (
+        <div class={`group relative rounded-3xl overflow-hidden glass hover:border-white/20 transition-all duration-500 bento-item ${index === 1 ? 'md:col-span-2 lg:col-span-2 row-span-2' : 'col-span-1 row-span-1 lg:row-span-2'}`}>
+          <img 
+            src={craft.image} 
+            alt={craft.name} 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-80"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-space-900 via-space-900/80 to-transparent"></div>
+          
+          <div class="absolute inset-0 p-8 flex flex-col justify-end">
+            <div class="translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 backdrop-blur border border-white/10 text-white">
+                  {craft.class}
+                </span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-2">{craft.name}</h2>
+              <p class="text-gray-300 text-sm mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2 md:line-clamp-none">
+                {craft.description}
+              </p>
+              
+              <div class="grid grid-cols-2 gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                <div class="flex items-center gap-2 text-white/80 text-sm border-t border-white/10 pt-3">
+                  <Users class="w-4 h-4 text-neon-blue" /> {craft.capacity} Passengers
+                </div>
+                <div class="flex items-center gap-2 text-white/80 text-sm border-t border-white/10 pt-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-neon-purple"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> {craft.topSpeed}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      
+      <!-- Tech Specs / filler card -->
+      <div class="group relative rounded-3xl overflow-hidden glass p-8 flex flex-col justify-center border border-white/5 bento-item lg:col-span-3 h-auto min-h-[300px]">
+         <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-neon-blue/5 blur-[80px] rounded-full pointer-events-none"></div>
+         <h3 class="text-2xl font-bold text-white mb-4">Next-Gen Propulsion</h3>
+         <p class="text-gray-400 max-w-2xl mb-8">All AstroNova vessels utilize proprietary fusion drives, reducing transit times by 40% while maintaining a completely carbon-neutral footprint.</p>
+         <div class="flex gap-4">
+            <div class="px-4 py-2 rounded-lg bg-space-800 border border-white/10 text-sm text-gray-300">Fusion Drive v4</div>
+            <div class="px-4 py-2 rounded-lg bg-space-800 border border-white/10 text-sm text-gray-300">AI Navigation</div>
+            <div class="px-4 py-2 rounded-lg bg-space-800 border border-white/10 text-sm text-gray-300">Quantum Shielding</div>
+         </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener('astro:page-load', () => {
+    const items = document.querySelectorAll('.bento-item');
+    if (items.length > 0) {
+      gsap.fromTo(items, 
+        { y: 50, opacity: 0 },
+        {
+          y: 0, 
+          opacity: 1, 
+          duration: 0.8, 
+          stagger: 0.15,
+          ease: "power2.out"
+        }
+      );
+    }
+  });
+</script>

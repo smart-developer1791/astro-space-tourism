@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-space-900: #0a0a0f;
+  --color-space-800: #13141f;
+  --color-space-700: #1d1e2e;
+  --color-neon-blue: #00f0ff;
+  --color-neon-purple: #b026ff;
+  --color-starlight: #f8f9fa;
+  
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  body {
+    @apply bg-space-900 text-starlight font-sans antialiased overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-space-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-space-700 rounded-full hover:bg-space-800;
+}
+
+/* Utilities for GSAP / Glassmorphism */
+.glass {
+  @apply bg-space-800/60 backdrop-blur-md border border-white/10;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple;
+}
